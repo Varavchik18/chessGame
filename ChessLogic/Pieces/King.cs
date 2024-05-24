@@ -22,7 +22,7 @@ namespace ChessLogic
             Color = color;
         }
 
-        public override bool HasMoved { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool HasMoved { get; set; }
 
         public override Piece Copy()
         {

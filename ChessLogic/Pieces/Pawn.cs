@@ -5,6 +5,7 @@
         public override PieceType Type => PieceType.Pawn;
 
         public override Player Color { get; }
+        public override bool HasMoved { get ; set ; }
 
         private readonly Direction forward;
 
@@ -22,7 +23,6 @@
             }
         }
 
-        public override bool HasMoved { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override Piece Copy()
         {
@@ -79,6 +79,15 @@
         public override IEnumerable<Move> GetMoves(Position positionFrom, Board board)
         {
             return ForwardMoves(positionFrom, board).Concat(DiagonalMoves(positionFrom, board));
+        }
+
+        public override bool CanCaptureOpponentKing(Position positionFrom, Board board)
+        {
+            return DiagonalMoves(positionFrom, board).Any(move =>
+            {
+                Piece piece = board[move.ToPosition];
+                return piece != null && piece.Type == PieceType.King;
+            });
         }
     }
 }
