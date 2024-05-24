@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "xptZKZ86ymff+3Hl+XBdMM+CgBz9dFTenjgQgTFglIQfY+LH2Vh778JcQS3Dp/TSJxPrv2ALQgEbcT5shwxfng==",
+  "dgSpecHash": "Ijxenfawj0mFvSFae4HcdENdwkIJituTySNNDEMWHxV5TjBLkZ0q9eQZB+yGpvxO5wSyS8oKKnrKDzQR5Zgl0A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pasha\\source\\repos\\ChessGame\\ChessLogic\\ChessLogic.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\pasha\\Source\\Repos\\chessGame\\ChessLogic\\ChessLogic.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.30\\microsoft.windowsdesktop.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.30\\microsoft.netcore.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.30\\microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512"
+  ],
   "logs": []
 }

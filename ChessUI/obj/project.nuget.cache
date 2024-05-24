@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "N0/rQJAY+jX8b7M3znxT9IRZIrqV62IK3uiuyFG0m+N41sL1nCuiFrc/MDzFvFxvFEAO1k0FxDbh1ArDo0V4Og==",
+  "dgSpecHash": "UNnqtzwBg7ffCSE+Xwdqls/tmnDZZPpg9IHt52n2Hpe1BYkSYZDFVdbtm9A+TxyjDYP4eiDqzLiYLLG0RhnNpQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pasha\\source\\repos\\ChessGame\\ChessUI\\ChessUI.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\pasha\\Source\\Repos\\chessGame\\ChessUI\\ChessUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.30\\microsoft.windowsdesktop.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.30\\microsoft.netcore.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.30\\microsoft.aspnetcore.app.ref.6.0.30.nupkg.sha512",
+    "C:\\Users\\pasha\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.30\\microsoft.netcore.app.host.win-x64.6.0.30.nupkg.sha512"
+  ],
   "logs": []
 }
