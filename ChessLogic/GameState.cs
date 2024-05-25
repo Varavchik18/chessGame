@@ -7,6 +7,8 @@
         public Player PlayerToMove { get; private set; }
         public Result Result { get; private set; } = null;
 
+        private int NoCaptureOrPawnMovesCounter = 0;
+
         public GameState(Board board, Player playerToMove)
         {
             Board = board;
@@ -14,7 +16,7 @@
         }
         public IEnumerable<Move> LegalMoveForPiece(Position position)
         {
-            if(Board.IsPositionEmpty(position) || Board[position].Color != PlayerToMove)
+            if (Board.IsPositionEmpty(position) || Board[position].Color != PlayerToMove)
             {
                 return Enumerable.Empty<Move>();
             }
@@ -30,7 +32,12 @@
         {
             Board.SetPawnSkipPosition(PlayerToMove, null);
 
-            move.Execute(Board);
+            bool captureOrPawnMove = move.Execute(Board);
+            if (captureOrPawnMove)
+            {
+                NoCaptureOrPawnMovesCounter = 0;
+            }
+            else NoCaptureOrPawnMovesCounter++;
             PlayerToMove = PlayerToMove.GetOpponent();
             CheckForGameOver();
         }
@@ -58,9 +65,14 @@
                 {
                     Result = Result.Draw(ReasonOfTheEnd.Stalemate);
                 }
-            }  else if (Board.InsufficientMaterial())
+            }
+            else if (Board.InsufficientMaterial())
             {
                 Result = Result.Draw(ReasonOfTheEnd.InsufficientMaterial);
+            }
+            else if (FiftyMoveRule())
+            {
+                Result = Result.Draw(ReasonOfTheEnd.FiftyMoveRole);
             }
         }
 
@@ -68,6 +80,12 @@
         public bool IsGameOver()
         {
             return Result != null;
+        }
+
+        private bool FiftyMoveRule()
+        {
+            int fullMoves = NoCaptureOrPawnMovesCounter / 2;
+            return fullMoves == 50;
         }
     }
 }

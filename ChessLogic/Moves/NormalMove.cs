@@ -13,13 +13,17 @@
 
         public override Position ToPosition { get; }
 
-        public override void Execute(Board board)
+        public override bool Execute(Board board)
         {
             Piece piece = board[FromPosition];
+            bool capture = !board.IsPositionEmpty(ToPosition);
+
             board[ToPosition] = piece;
             board[FromPosition] = null;
 
             piece.HasMoved = true;
+
+            return capture || piece.Type == PieceType.Pawn;
         }
     }
 }
