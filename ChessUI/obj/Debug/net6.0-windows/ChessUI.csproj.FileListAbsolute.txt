@@ -23,3 +23,6 @@ C:\Users\pasha\source\repos\ChessGame\ChessUI\obj\Debug\net6.0-windows\ChessUI.g
 C:\Users\pasha\source\repos\ChessGame\ChessUI\obj\Debug\net6.0-windows\ref\ChessUI.dll
 C:\Users\pasha\Source\Repos\chessGame\ChessUI\obj\Debug\net6.0-windows\ChessUI.sourcelink.json
 C:\Users\pasha\Source\Repos\chessGame\ChessUI\obj\Debug\net6.0-windows\ChessUI.csproj.Up2Date
+C:\Users\pasha\source\repos\chessGame\ChessUI\obj\Debug\net6.0-windows\GameOverMenu.g.cs
+C:\Users\pasha\source\repos\chessGame\ChessUI\obj\Debug\net6.0-windows\App.baml
+C:\Users\pasha\source\repos\chessGame\ChessUI\obj\Debug\net6.0-windows\GameOverMenu.baml
