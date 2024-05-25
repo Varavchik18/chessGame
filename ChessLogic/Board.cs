@@ -71,5 +71,46 @@
                 this[6, a] = new Pawn(Player.White);
             }
         }
+
+        public IEnumerable<Position> PiecePositions()
+        {
+            for (int row=0; row < 8; row++)
+            {
+                for(int column=0; column < 8; column++)
+                {
+                    Position position = new Position(row, column);
+                    if (!IsPositionEmpty(position))
+                    {
+                        yield return position;
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<Position> PiecePositionsFor(Player player)
+        {
+            return PiecePositions().Where(position => this[position].Color == player);
+        }
+
+        public bool IsInCheck(Player player)
+        {
+            return PiecePositionsFor(player.GetOpponent()).Any( position =>
+            {
+                Piece piece = this[position];
+                return piece.CanCaptureOpponentKing(position, this);
+            });
+        }
+
+        public Board Copy()
+        {
+            Board copiedBoard = new Board();
+
+            foreach (Position position in PiecePositions())
+            {
+                copiedBoard[position] = this[position].Copy();
+            }
+
+            return copiedBoard;
+        }
     }
 }
