@@ -2,7 +2,7 @@
 {
     public class Board
     {
-        private readonly Piece[,] pieces = new Piece[8 ,8];
+        private readonly Piece[,] pieces = new Piece[8, 8];
         private readonly Dictionary<Player, Position> pawnSkipPositions = new Dictionary<Player, Position>
         {
             {Player.White, null },
@@ -18,7 +18,7 @@
 
             set
             {
-                pieces[row, col] = value; 
+                pieces[row, col] = value;
             }
         }
 
@@ -54,13 +54,13 @@
             this[7, 5] = new Bishop(Player.White);
             this[7, 6] = new Knight(Player.White);
             this[7, 7] = new Rook(Player.White);
-            
+
             SpawnPawns();
         }
 
         public static bool IsInsideBoard(Position position)
         {
-            return position.Row >=0 && position.Row <8 && position.Column>=0 && position.Column <8;
+            return position.Row >= 0 && position.Row < 8 && position.Column >= 0 && position.Column < 8;
         }
 
         public bool IsPositionEmpty(Position position)
@@ -89,9 +89,9 @@
 
         public IEnumerable<Position> PiecePositions()
         {
-            for (int row=0; row < 8; row++)
+            for (int row = 0; row < 8; row++)
             {
-                for(int column=0; column < 8; column++)
+                for (int column = 0; column < 8; column++)
                 {
                     Position position = new Position(row, column);
                     if (!IsPositionEmpty(position))
@@ -109,7 +109,7 @@
 
         public bool IsInCheck(Player player)
         {
-            return PiecePositionsFor(player.GetOpponent()).Any( position =>
+            return PiecePositionsFor(player.GetOpponent()).Any(position =>
             {
                 Piece piece = this[position];
                 return piece.CanCaptureOpponentKing(position, this);
@@ -126,6 +126,65 @@
             }
 
             return copiedBoard;
+        }
+
+        public CountingPieces CountPieces()
+        {
+            CountingPieces counting = new CountingPieces();
+
+            foreach (Position position in PiecePositions())
+            {
+                Piece piece = this[position];
+
+                counting.Increment(piece.Color, piece.Type);
+            }
+
+            return counting;
+        }
+
+        public bool InsufficientMaterial()
+        {
+            CountingPieces counting = CountPieces();
+
+            return IsKingVsKing(counting) || IsKingKnightVsKing(counting) || IsKingBishopVsKingBishop(counting) || IsKingBishopVsKing(counting) ;
+        }
+
+        private static bool IsKingVsKing(CountingPieces counting)
+        {
+            return counting.TotalCount == 2;
+        }
+
+        private static bool IsKingBishopVsKing(CountingPieces counting)
+        {
+            return counting.TotalCount == 3 && (counting.White(PieceType.Bishop) == 1 || counting.Black(PieceType.Bishop) == 1);
+        }
+
+        private static bool IsKingKnightVsKing(CountingPieces counting)
+        {
+            return counting.TotalCount == 3 && (counting.White(PieceType.Knight) == 1 || counting.Black(PieceType.Knight) == 1);
+        }
+
+        private bool IsKingBishopVsKingBishop(CountingPieces counting)
+        {
+            if(counting.TotalCount != 4)
+            {
+                return false;
+            }
+
+            if (counting.White(PieceType.Bishop) != 1 || counting.Black(PieceType.Bishop) != 1)
+            {
+                return false;
+            }
+
+            Position wBishopPos = FindPiece(Player.White, PieceType.Bishop);
+            Position bBishopPos = FindPiece(Player.Black, PieceType.Bishop);
+
+            return wBishopPos.GetSquareColor() == bBishopPos.GetSquareColor();
+        }
+
+        private Position FindPiece(Player color, PieceType type)
+        {
+            return  PiecePositionsFor(color).First(pos => this[pos].Type == type);
         }
     }
 }

@@ -58,7 +58,10 @@
                 {
                     Result = Result.Draw(ReasonOfTheEnd.Stalemate);
                 }
-            }  
+            }  else if (Board.InsufficientMaterial())
+            {
+                Result = Result.Draw(ReasonOfTheEnd.InsufficientMaterial);
+            }
         }
 
 
