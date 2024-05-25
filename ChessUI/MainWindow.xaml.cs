@@ -72,7 +72,7 @@ namespace ChessUI
             Point point = e.GetPosition(BoardGrid);
             Position position = ToSquarePosition(point);
 
-            if(selectedPosition == null)
+            if (selectedPosition == null)
             {
                 OnFromPositionSelected(position);
             }
@@ -88,10 +88,33 @@ namespace ChessUI
 
             HideHighlights();
 
-            if(moveCache.TryGetValue(position, out Move move))
+            if (moveCache.TryGetValue(position, out Move move))
             {
-                HandleMove(move);
+                if (move.Type == MoveType.PawnPromotion)
+                {
+                    HandlePromotion(move.FromPosition, move.ToPosition);
+                }
+                else
+                {
+                    HandleMove(move);
+                }
             }
+        }
+
+        private void HandlePromotion(Position fromPosition, Position toPosition)
+        {
+            pieceImages[toPosition.Row, toPosition.Column].Source = Images.GetImage(gameState.PlayerToMove, PieceType.Pawn);
+            pieceImages[fromPosition.Row, fromPosition.Column].Source = null;
+
+            PromotionMenu promotionMenu = new PromotionMenu(gameState.PlayerToMove);
+            MenuContainer.Content = promotionMenu;
+
+            promotionMenu.PieceSelected += type =>
+            {
+                MenuContainer.Content = null;
+                Move promotionMove = new PawnPromotion(fromPosition, toPosition, type);
+                HandleMove(promotionMove);
+            }; 
         }
 
         private void HandleMove(Move move)

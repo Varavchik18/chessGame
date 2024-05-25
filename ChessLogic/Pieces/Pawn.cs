@@ -46,12 +46,32 @@
             return board[position].Color!= Color;
         }
 
+        private static IEnumerable<Move> PromotionMoves(Position positionFrom, Position positionTo)
+        {
+            yield return new PawnPromotion(positionFrom, positionTo, PieceType.Knight);
+            yield return new PawnPromotion(positionFrom, positionTo, PieceType.Bishop);
+            yield return new PawnPromotion(positionFrom, positionTo, PieceType.Rook);
+            yield return new PawnPromotion(positionFrom, positionTo, PieceType.Queen);
+        }
+
         private IEnumerable<Move> ForwardMoves(Position positionFrom, Board board)
         {
             Position oneMovePosition = positionFrom + forward;
 
             if(CanMoveTo(oneMovePosition, board))
             {
+                if(oneMovePosition.Row == 0 || oneMovePosition.Row == 7)
+                {
+                    foreach(Move promotionMove in PromotionMoves(positionFrom, oneMovePosition))
+                    {
+                        yield return promotionMove;
+                    }
+                }
+                else
+                {
+                    yield return new NormalMove(positionFrom, oneMovePosition);
+                }
+
                 yield return new NormalMove(positionFrom, oneMovePosition);
 
                 Position twoMovesPosition = oneMovePosition + forward;
@@ -71,7 +91,17 @@
 
                 if(CanCaptureAt(positionTo,board))
                 {
-                    yield return new NormalMove(positionFrom, positionTo);
+                    if (positionTo.Row == 0 || positionTo.Row == 7)
+                    {
+                        foreach (Move promotionMove in PromotionMoves(positionFrom, positionTo))
+                        {
+                            yield return promotionMove;
+                        }
+                    }
+                    else
+                    {
+                        yield return new NormalMove(positionFrom, positionTo);
+                    }
                 }
             }
         }
