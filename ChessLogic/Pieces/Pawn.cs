@@ -1,4 +1,6 @@
-﻿namespace ChessLogic
+﻿using ChessLogic.Moves;
+
+namespace ChessLogic
 {
     public class Pawn : Piece
     {
@@ -78,7 +80,7 @@
 
                 if(!HasMoved && CanMoveTo(twoMovesPosition, board))
                 {
-                    yield return new NormalMove(positionFrom, twoMovesPosition);
+                    yield return new DoublePawn(positionFrom, twoMovesPosition);
                 }
             }
         }
@@ -89,7 +91,11 @@
             {
                 Position positionTo = positionFrom + forward + dir;
 
-                if(CanCaptureAt(positionTo,board))
+                if(positionTo == board.GetPawnSkipPosition(Color.GetOpponent()))
+                {
+                    yield return new EnPassant(positionFrom, positionTo);
+                }
+                else if(CanCaptureAt(positionTo,board))
                 {
                     if (positionTo.Row == 0 || positionTo.Row == 7)
                     {

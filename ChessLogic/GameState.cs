@@ -28,6 +28,8 @@
 
         public void MakeMove(Move move)
         {
+            Board.SetPawnSkipPosition(PlayerToMove, null);
+
             move.Execute(Board);
             PlayerToMove = PlayerToMove.GetOpponent();
             CheckForGameOver();

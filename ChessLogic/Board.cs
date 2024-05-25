@@ -3,6 +3,11 @@
     public class Board
     {
         private readonly Piece[,] pieces = new Piece[8 ,8];
+        private readonly Dictionary<Player, Position> pawnSkipPositions = new Dictionary<Player, Position>
+        {
+            {Player.White, null },
+            {Player.Black, null }
+        };
 
         public Piece this[int row, int col]
         {
@@ -70,6 +75,16 @@
                 this[1, a] = new Pawn(Player.Black);
                 this[6, a] = new Pawn(Player.White);
             }
+        }
+
+        public Position GetPawnSkipPosition(Player player)
+        {
+            return pawnSkipPositions[player];
+        }
+
+        public void SetPawnSkipPosition(Player player, Position position)
+        {
+            pawnSkipPositions[player] = position;
         }
 
         public IEnumerable<Position> PiecePositions()
